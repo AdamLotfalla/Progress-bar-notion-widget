@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>White Progress Bar with Percentage</title>
+  <title>Black Progress Bar with Percentage</title>
   <style>
     body {
       background-color: black; /* Black background */
       color: white; /* White text color */
+      font-family: monospace; /* Monospace font for better alignment */
     }
 
     .progress-container {
       width: 100%;
       height: 20px; /* Adjust height as needed */
-      background-color: black; /* Black container background */
+      background-color: #222; /* Darker gray background */
       border-radius: 5px; /* Rounded corners */
       display: flex; /* Allow stacking elements horizontally */
       align-items: center; /* Align content vertically */
@@ -22,18 +23,15 @@
     .progress-bar {
       width: 0%; /* Initial progress */
       height: 100%;
-      background-color: white; /* White progress bar */
+      background-color: black;
       border-radius: inherit; /* Inherit rounded corners from container */
       transition: width 1s ease-in-out; /* Smooth animation */
     }
 
     .progress-text {
-      color: white; /* White text color */
       margin-left: 5px; /* Add spacing between bar and text */
-      font-family: 'Anton', sans-serif; /* Use Anton font */
     }
   </style>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
 </head>
 <body>
   <div class="progress-container">
@@ -45,7 +43,7 @@
     const progressText = document.querySelector('.progress-text');
 
     // Set your desired progress (replace 70 with your value)
-    const progressValue = 70;
+    const progressValue = 25;
 
     progressBar.style.width = `${progressValue}%`;
     progressText.textContent = `${progressValue}%`;
