@@ -3,21 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black Progress Bar with Percentage</title>
+  <title>Date-based Progress Bar</title>
   <style>
-    body {
-      background-color: black; /* Black background */
-      color: white; /* White text color */
-      font-family: monospace; /* Monospace font for better alignment */
-    }
-
     .progress-container {
       width: 100%;
       height: 20px; /* Adjust height as needed */
-      background-color: #222; /* Darker gray background */
+      background-color: #ddd; /* Light gray background */
       border-radius: 5px; /* Rounded corners */
-      display: flex; /* Allow stacking elements horizontally */
-      align-items: center; /* Align content vertically */
     }
 
     .progress-bar {
@@ -27,26 +19,32 @@
       border-radius: inherit; /* Inherit rounded corners from container */
       transition: width 1s ease-in-out; /* Smooth animation */
     }
-
-    .progress-text {
-      margin-left: 5px; /* Add spacing between bar and text */
-    }
   </style>
 </head>
 <body>
   <div class="progress-container">
     <div class="progress-bar"></div>
-    <span class="progress-text">0%</span>
   </div>
   <script>
     const progressBar = document.querySelector('.progress-bar');
-    const progressText = document.querySelector('.progress-text');
 
-    // Set your desired progress (replace 70 with your value)
-    const progressValue = 25;
+    // Define start and end dates (replace with your desired dates)
+    const startDate = new Date('2024-05-31'); // Today's date (replace with your start date)
+    const endDate = new Date('2025-06-1'); // June 30th, 2024 (replace with your end date)
 
-    progressBar.style.width = `${progressValue}%`;
-    progressText.textContent = `${progressValue}%`;
+    // Calculate total duration in milliseconds
+    const totalDuration = endDate.getTime() - startDate.getTime();
+
+    // Get today's date
+    const today = new Date();
+
+    // Calculate elapsed time since start date
+    const elapsedTime = today.getTime() - startDate.getTime();
+
+    // Calculate progress percentage
+    const progress = Math.min(elapsedTime / totalDuration, 1) * 100; // Ensures progress doesn't exceed 100%
+
+    progressBar.style.width = `${progress}%`;
   </script>
 </body>
 </html>
