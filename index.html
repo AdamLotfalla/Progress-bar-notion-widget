@@ -7,30 +7,52 @@
   <style>
     .progress-container {
       width: 100%;
+      height: 30px; /* Adjust height as needed */
+      background-color: #ddd; /* Light gray background */
+      border-radius: 5px; /* Rounded corners */
+      display: flex; /* Allow stacking elements horizontally */
+      align-items: center; /* Align content vertically */
+      width: 100%;
       height: 20px; /* Adjust height as needed */
       background-color: #ddd; /* Light gray background */
       border-radius: 5px; /* Rounded corners */
+      position: relative; /* Enable relative positioning for child elements */
     }
 
     .progress-bar {
       width: 0%; /* Initial progress */
       height: 100%;
-      background-color: black;
+      background-color: #d44c47;
       border-radius: inherit; /* Inherit rounded corners from container */
       transition: width 1s ease-in-out; /* Smooth animation */
+    }
+    .progress-text {
+      color: #fdebec; /* Adjust text color as needed */
+      font-size: 10px; /* Adjust font size as needed */
+      position: absolute; /* Make text element absolute for positioning */
+      top: 50%; /* Position text vertically at the center */
+      transform: translateY(-50%); /* Offset to align with progress bar height */
+      left: 6px; /* Fix text to the left side with some margin */
+      white-space: nowrap; /* Prevent text wrapping */
+      text-align: left; /* Align text to the left */
+      font-family: "Anton", sans-serif;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
   <div class="progress-container">
+    <span class="progress-text">0%</span>
     <div class="progress-bar"></div>
   </div>
   <script>
     const progressBar = document.querySelector('.progress-bar');
+    const progressText = document.querySelector('.progress-text');
+
 
     // Define start and end dates (replace with your desired dates)
-    const startDate = new Date('2024-05-01'); // May 1st, 2024 (replace with your start date)
-    const endDate = new Date('2024-06-30'); // June 30th, 2024 (replace with your end date)
+    const startDate = new Date('2024-05-01'); // May 1st, 2024
+    const endDate = new Date('2024-06-30'); // June 1st, 2024
 
     // Calculate total duration in milliseconds
     const totalDuration = endDate.getTime() - startDate.getTime();
@@ -38,16 +60,14 @@
     // Get today's date
     const today = new Date();
 
-    // Ensure today's date is within the start and end date range
-    const clampedDate = Math.max(startDate, Math.min(today, endDate));
-
-    // Calculate elapsed time since start date (using clamped date)
-    const elapsedTime = clampedDate.getTime() - startDate.getTime();
+    // Calculate time elapsed since start date
+    const elapsedTime = today.getTime() - startDate.getTime();
 
     // Calculate progress percentage
     const progress = Math.min(elapsedTime / totalDuration, 1) * 100; // Ensures progress doesn't exceed 100%
 
     progressBar.style.width = `${progress}%`;
+    progressText.textContent = `${progress.toFixed(2)}%`;
   </script>
 </body>
 </html>
