@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black Progress Bar with Percentage</title>
+  <title>White Progress Bar with Percentage</title>
   <style>
     body {
       background-color: black; /* Black background */
       color: white; /* White text color */
-      font-family: monospace; /* Monospace font for better alignment */
     }
 
     .progress-container {
       width: 100%;
       height: 20px; /* Adjust height as needed */
-      background-color: #222; /* Darker gray background */
+      background-color: black; /* Black container background */
       border-radius: 5px; /* Rounded corners */
       display: flex; /* Allow stacking elements horizontally */
       align-items: center; /* Align content vertically */
@@ -23,15 +22,18 @@
     .progress-bar {
       width: 0%; /* Initial progress */
       height: 100%;
-      background-color: black;
+      background-color: white; /* White progress bar */
       border-radius: inherit; /* Inherit rounded corners from container */
       transition: width 1s ease-in-out; /* Smooth animation */
     }
 
     .progress-text {
+      color: white; /* White text color */
       margin-left: 5px; /* Add spacing between bar and text */
+      font-family: 'Anton', sans-serif; /* Use Anton font */
     }
   </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
 </head>
 <body>
   <div class="progress-container">
