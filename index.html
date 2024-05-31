@@ -29,7 +29,7 @@
     const progressBar = document.querySelector('.progress-bar');
 
     // Define start and end dates (replace with your desired dates)
-    const startDate = new Date('2024-05-1'); // Today's date (replace with your start date)
+    const startDate = new Date('2024-05-01'); // May 1st, 2024 (replace with your start date)
     const endDate = new Date('2024-06-30'); // June 30th, 2024 (replace with your end date)
 
     // Calculate total duration in milliseconds
@@ -38,8 +38,11 @@
     // Get today's date
     const today = new Date();
 
-    // Calculate elapsed time since start date
-    const elapsedTime = today.getTime() - startDate.getTime();
+    // Ensure today's date is within the start and end date range
+    const clampedDate = Math.max(startDate, Math.min(today, endDate));
+
+    // Calculate elapsed time since start date (using clamped date)
+    const elapsedTime = clampedDate.getTime() - startDate.getTime();
 
     // Calculate progress percentage
     const progress = Math.min(elapsedTime / totalDuration, 1) * 100; // Ensures progress doesn't exceed 100%
