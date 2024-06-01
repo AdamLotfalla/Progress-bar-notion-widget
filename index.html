@@ -5,26 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Date-based Progress Bar</title>
   <style>
+    :root {
+      --roundC: 32px;
+    }
+
     .progress-container {
       width: 100%;
       height: 2.5rem; /* Adjust height as needed */
       background-color: #ddd; /* Light gray background */
-      border-radius: 5rem; /* Rounded corners */
+      border-radius: var(--roundC); /* Rounded corners */
       display: flex; /* Allow stacking elements horizontally */
-      align-items: center; /* Align content vertically */
-      background-color: #ddd; /* Light gray background */
-      border-radius: 5rem; /* Rounded corners */
+      align-items: end; /* Align content vertically */
       position: relative; /* Enable relative positioning for child elements */
-      
+      overflow: hidden;
     }
 
     .progress-bar {
       width: 0%; /* Initial progress */
       height: 100%;
       background-color: #d44c47;
-      border-radius: inherit; /* Inherit rounded corners from container */
+      border-radius: inherit; /* Rounded corners */
       transition: width 1s ease-in-out; /* Smooth animation */
+      overflow: show;
     }
+
     .progress-text {
       color: #fdebec; /* Adjust text color as needed */
       font-size: 15px; /* Adjust font size as needed */
@@ -37,6 +41,91 @@
       font-family: "Anton", sans-serif;
       font-weight: 700;
     }
+
+    .progress-container2 {
+      width: inherit;
+      height: 0.25rem; /* Adjust height as needed */
+      background-color: #b4b4b4;
+      border-radius: var(--roundC); /* Rounded corners */
+      margin-top: -0.25rem;
+
+      display: flex; /* Allow stacking elements horizontally */
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .crop {
+      background-color: rgba(0, 0, 0, 0);
+      margin-top: -2.5rem;
+      overflow: hidden;
+    }
+
+    .smallP {
+      width: 20%;
+      background-color: #1a8dcf;
+      border-radius: 0;
+    }
+
+    .progress-text2 {
+      margin-top: 1rem;
+      color: #2e2e2e; /* Adjust text color as needed */
+      font-size: 100px; /* Adjust font size as needed */
+
+      text-align: center;
+      font-family: "Anton", sans-serif;
+      font-weight: 700;
+      color: #d44c47;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-box {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1rem;
+      min-width: 250px;
+      max-width: 150px;
+      display: block;
+      position: relative;
+      flex-direction: row;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      font-family: sans-serif;
+      justify-content: center;
+    }
+
+    .countdown-title,
+    .countdown-date {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      display: block;
+    }
+
+    .countdown-details {
+      display: flex;
+      justify-content: space-between;
+      width: 1
+    }
+
+    .countdown-item {
+      text-align: center;
+    }
+
+    .countdown-value {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .countdown-label {
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+
     /* Optional: Media Queries for Additional Zoom-Specific Styles  */
       
     @media screen and (zoom: 1.5) {
@@ -48,18 +137,50 @@
     }
   </style>
 </head>
+
 <body>
-  <div class="progress-container">
-    <span class="progress-text">0%</span>
-    <div class="progress-bar"></div>
+
+
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+      <span class="progress-text">0%</span>
+    </div>
+    <div class="progress-container crop">
+      <div class="progress-container2">
+        <div class="progress-bar smallP" ></div>
+      </div>
+    </div>
+
+
+
+
+  <div class="countdown-box">
+    <div class="countdown-details">
+      <div class="countdown-item">
+        <span class="countdown-value" id="years-remaining"></span>
+        <span class="countdown-label">Years</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-value" id="months-remaining"></span>
+        <span class="countdown-label">Months</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-value" id="days-remaining"></span>
+        <span class="countdown-label">Days</span>
+      </div>
+    </div>
+    <div class="progress-text2" id="progressPercentage">0%</div>
   </div>
+
+  
+
   <script>
     const progressBar = document.querySelector('.progress-bar');
     const progressText = document.querySelector('.progress-text');
 
 
     // Define start and end dates (replace with your desired dates)
-    const startDate = new Date('2024-05-01'); // May 1st, 2024
+    const startDate = new Date('2024-05-31'); // May 1st, 2024
     const endDate = new Date('2025-06-01'); // June 1st, 2024
 
     // Calculate total duration in milliseconds
@@ -76,6 +197,84 @@
 
     progressBar.style.width = `${progress}%`;
     progressText.textContent = `${progress.toFixed(2)}%`;
+
+
+    const daysRemainingSpan = document.getElementById("days-remaining");
+    const monthsRemainingSpan = document.getElementById("months-remaining");
+    const yearsRemainingSpan = document.getElementById("years-remaining");
+
+    function updateCountdown() {
+      const today = new Date();
+      const diffInMs = endDate.getTime() - today.getTime();
+    
+      // Calculate days, months, and years
+
+      const inDays = (diffInMs / (1000 * 60 * 60 * 24))
+      const years = Math.floor(inDays / 365);
+      const months = Math.floor((inDays % 365) / 30); // Approximate calculation, assuming 30 days per month
+      const days = Math.floor((inDays % 365) % 30 );
+    
+      // Update the countdown values
+      daysRemainingSpan.textContent = days;
+      monthsRemainingSpan.textContent = months;
+      yearsRemainingSpan.textContent = years;
+    }
+
+    updateCountdown(); // Call the function initially
+
+    // Update the countdown every second (optional)
+    setInterval(updateCountdown, 1000);
+
+    //------------------------------------------------------------------------------------------------------------
+
+    const notionToken = "secret_7f8dwiMUogHbH6Y30IAYKpCS5S2YhRqwBBu7w2vGni7"; // Replace with your actual Notion token
+    const databaseId = "9f228310b76f456fa47849b20cff1c94"; // Replace with your Notion database ID
+
+    async function getRollupProperty() {
+      const url = `https://api.notion.com/v1/databases/${databaseId}/query`;
+    
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${notionToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          filter: {
+            property: "Rollup", // Filter by property named "Rollup"
+          },
+        }),
+      });
+    
+      if (!response.ok) {
+        throw new Error(`Error fetching data: ${response.status}`);
+      }
+    
+      const data = await response.json();
+      const rollupValue = data.results[0].properties.Rollup.rollup.number; // Assuming "Rollup" is a rollup property with a number type
+    
+      // Handle potential errors if no results are found or the property type is not a number
+      if (!rollupValue) {
+        console.error("No Rollup property found or property is not of type number.");
+        return null;
+      }
+    
+      return `${rollupValue}%`; // Return the percentage value
+    }
+
+
+    const percentagedone= document.getElementById("progressPercentage");
+    getRollupProperty()
+    .then(percentage => {
+      console.log("Retrieved percentage:", percentage); // Log the retrieved value
+      percentagedone.textContent = percentage;
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+
+
+
   </script>
 </body>
 </html>
