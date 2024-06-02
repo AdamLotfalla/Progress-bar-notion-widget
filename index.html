@@ -24,13 +24,13 @@
       width: 0%; /* Initial progress */
       height: 100%;
       background-color: #d44c47;
-      border-radius: inherit; /* Rounded corners */
+      border-radius: 0; /* Rounded corners */
       transition: width 1s ease-in-out; /* Smooth animation */
       overflow: show;
     }
 
     .progress-text {
-      color: #fdebec; /* Adjust text color as needed */
+      color: #ffffff; /* Adjust text color as needed */
       font-size: 15px; /* Adjust font size as needed */
       position: absolute; /* Make text element absolute for positioning */
       top: 50%; /* Position text vertically at the center */
@@ -40,6 +40,7 @@
       text-align: left; /* Align text to the left */
       font-family: "Anton", sans-serif;
       font-weight: 700;
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.527);
     }
 
     .progress-container2 {
@@ -145,11 +146,11 @@
       <div class="progress-bar"></div>
       <span class="progress-text">0%</span>
     </div>
-    <div class="progress-container crop">
+    <!-- <div class="progress-container crop">
       <div class="progress-container2">
         <div class="progress-bar smallP" ></div>
       </div>
-    </div>
+    </div> -->
 
 
 
@@ -169,18 +170,18 @@
         <span class="countdown-label">Days</span>
       </div>
     </div>
-    <div class="progress-text2" id="progressPercentage">0%</div>
+    <!-- <div class="progress-text2" id="progressPercentage">0%</div> -->
   </div>
 
   
 
-  <script>
+  <script type="module">
     const progressBar = document.querySelector('.progress-bar');
     const progressText = document.querySelector('.progress-text');
 
 
     // Define start and end dates (replace with your desired dates)
-    const startDate = new Date('2024-05-31'); // May 1st, 2024
+    const startDate = new Date('2024-10-01'); // May 1st, 2024
     const endDate = new Date('2025-06-01'); // June 1st, 2024
 
     // Calculate total duration in milliseconds
@@ -226,52 +227,11 @@
     setInterval(updateCountdown, 1000);
 
     //------------------------------------------------------------------------------------------------------------
+    
 
-    const notionToken = "secret_7f8dwiMUogHbH6Y30IAYKpCS5S2YhRqwBBu7w2vGni7"; // Replace with your actual Notion token
-    const databaseId = "9f228310b76f456fa47849b20cff1c94"; // Replace with your Notion database ID
+    
+    
 
-    async function getRollupProperty() {
-      const url = `https://api.notion.com/v1/databases/${databaseId}/query`;
-    
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${notionToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filter: {
-            property: "Rollup", // Filter by property named "Rollup"
-          },
-        }),
-      });
-    
-      if (!response.ok) {
-        throw new Error(`Error fetching data: ${response.status}`);
-      }
-    
-      const data = await response.json();
-      const rollupValue = data.results[0].properties.Rollup.rollup.number; // Assuming "Rollup" is a rollup property with a number type
-    
-      // Handle potential errors if no results are found or the property type is not a number
-      if (!rollupValue) {
-        console.error("No Rollup property found or property is not of type number.");
-        return null;
-      }
-    
-      return `${rollupValue}%`; // Return the percentage value
-    }
-
-
-    const percentagedone= document.getElementById("progressPercentage");
-    getRollupProperty()
-    .then(percentage => {
-      console.log("Retrieved percentage:", percentage); // Log the retrieved value
-      percentagedone.textContent = percentage;
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
 
 
 
