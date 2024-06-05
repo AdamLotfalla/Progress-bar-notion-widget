@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Date-based Progress Bar</title>
   <style>
+    body {
+    zoom:130%; /* For Chrome, IE, default 100%*/
+    }
+    
     :root {
       --roundC: 32px;
     }
@@ -146,11 +150,11 @@
       <div class="progress-bar"></div>
       <span class="progress-text">0%</span>
     </div>
-    <!-- <div class="progress-container crop">
+    <div class="progress-container crop">
       <div class="progress-container2">
-        <div class="progress-bar smallP" ></div>
+        <div class="progress-bar smallP" id="smallBar"></div>
       </div>
-    </div> -->
+    </div>
 
 
 
@@ -170,71 +174,11 @@
         <span class="countdown-label">Days</span>
       </div>
     </div>
-    <!-- <div class="progress-text2" id="progressPercentage">0%</div> -->
+    <div class="progress-text2" id="progressPercentage">0%</div>
   </div>
 
   
 
-  <script type="module">
-    const progressBar = document.querySelector('.progress-bar');
-    const progressText = document.querySelector('.progress-text');
-
-
-    // Define start and end dates (replace with your desired dates)
-    const startDate = new Date('2024-10-01'); // May 1st, 2024
-    const endDate = new Date('2025-06-01'); // June 1st, 2024
-
-    // Calculate total duration in milliseconds
-    const totalDuration = endDate.getTime() - startDate.getTime();
-
-    // Get today's date
-    const today = new Date();
-
-    // Calculate time elapsed since start date
-    const elapsedTime = today.getTime() - startDate.getTime();
-
-    // Calculate progress percentage
-    const progress = Math.min(elapsedTime / totalDuration, 1) * 100; // Ensures progress doesn't exceed 100%
-
-    progressBar.style.width = `${progress}%`;
-    progressText.textContent = `${progress.toFixed(2)}%`;
-
-
-    const daysRemainingSpan = document.getElementById("days-remaining");
-    const monthsRemainingSpan = document.getElementById("months-remaining");
-    const yearsRemainingSpan = document.getElementById("years-remaining");
-
-    function updateCountdown() {
-      const today = new Date();
-      const diffInMs = endDate.getTime() - today.getTime();
-    
-      // Calculate days, months, and years
-
-      const inDays = (diffInMs / (1000 * 60 * 60 * 24))
-      const years = Math.floor(inDays / 365);
-      const months = Math.floor((inDays % 365) / 30); // Approximate calculation, assuming 30 days per month
-      const days = Math.floor((inDays % 365) % 30 );
-    
-      // Update the countdown values
-      daysRemainingSpan.textContent = days;
-      monthsRemainingSpan.textContent = months;
-      yearsRemainingSpan.textContent = years;
-    }
-
-    updateCountdown(); // Call the function initially
-
-    // Update the countdown every second (optional)
-    setInterval(updateCountdown, 1000);
-
-    //------------------------------------------------------------------------------------------------------------
-    
-
-    
-    
-
-
-
-
-  </script>
+  <script type="module" src="notion.js"></script>
 </body>
 </html>
