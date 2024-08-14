@@ -3,8 +3,8 @@ const progressText = document.querySelector('.progress-text');
 const smallBar = document.getElementById("smallBar");
 
 
-const startDate = new Date('2024-10-01'); 
-const endDate = new Date('2025-06-01'); 
+const startDate = new Date('2024-09-21'); 
+const endDate = new Date('2025-06-14'); 
 
 const totalDuration = endDate.getTime() - startDate.getTime();
 
